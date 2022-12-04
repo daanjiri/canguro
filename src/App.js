@@ -7,32 +7,29 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
 
-
-const App=()=> {
-
-const [data, setData] = useState([])
+const App = () => {
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-   d3.csv(dataCSV).then((d) => {
-    setData(d);
-    // console.log(d)
-  });
-  }, [])
-  
- 
+    d3.csv(dataCSV).then((d) => {
+      setData(d);
+      // console.log(d)
+    });
+  }, []);
+
   // console.log(data)
   return (
-    <div >
-      <div> <Checkbox
+    <div>
+      {/* <div> <Checkbox
       checked={checked}
       onChange={handleChange}
       inputProps={{ 'aria-label': 'controlled' }}
     /> sexo1</div>
-   
-      <LineChart data={data}/>
+    */}
+      <LineChart data={data} />
       {/* {data.map((d)=><div>{d['@_id']}</div>)} */}
     </div>
   );
-}
+};
 
 export default App;
