@@ -6,7 +6,7 @@ import ScatterPlot from './components/ScatterPlot/ScatterPlot';
 import Checkbox from '@mui/material/Checkbox';
 import { Box, Grid } from '@mui/material';
 import BoxPlot from './components/boxPlot/BoxPlot';
-import RadarChart from './components/radarChart/radarChart';
+import RadarChart from './components/radarChart/RadarChart';
 
 const SEXO_1 = 'sexo1';
 const SEXO_2 = 'sexo2';
