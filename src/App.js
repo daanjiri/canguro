@@ -6,6 +6,7 @@ import ScatterPlot from './components/ScatterPlot/ScatterPlot';
 import Checkbox from '@mui/material/Checkbox';
 import { Box, Grid } from '@mui/material';
 import BoxPlot from './components/boxPlot/BoxPlot';
+import RadarChart from './components/radarChart/radarChart';
 
 const SEXO_1 = 'sexo1';
 const SEXO_2 = 'sexo2';
@@ -121,6 +122,9 @@ const App = () => {
         </Grid>
         <Grid item xs={6}>
           <BoxPlot data={filteredData} />
+        </Grid>
+        <Grid item xs={6}>
+          <RadarChart data={filteredData} />
         </Grid>
       </Grid>
 
