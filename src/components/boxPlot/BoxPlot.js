@@ -31,7 +31,14 @@ const BoxPlot = ({ data }) => {
 
   return (
     <div>
-      <div>
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'flex-end',
+        }}
+      >
         <FormControl sx={{ m: 1, width: 300 }}>
           <InputLabel id="demo-multiple-name-label">Name</InputLabel>
           <Select
