@@ -2,10 +2,11 @@ import React, { useEffect, useState, useReducer } from 'react';
 import * as d3 from 'd3';
 import dataCSV from './data_short.csv';
 import LineChart from './components/Linechart/LineChart';
+import ScatterPlot from './components/ScatterPlot/ScatterPlot';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Box from '@mui/material/Box';
+import { Box, Grid } from '@mui/material';
 
 const SEXO_1 = 'sexo1';
 const SEXO_2 = 'sexo2';
@@ -105,7 +106,15 @@ const App = () => {
         </div>
       </Box>
 
-      <LineChart data={filteredData} sexo={sexo} />
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <ScatterPlot data={filteredData} />
+        </Grid>
+        <Grid item xs={6}>
+          <LineChart data={filteredData} />
+        </Grid>
+      </Grid>
+
       {/* {data.map((d)=><div>{d['@_id']}</div>)} */}
     </div>
   );

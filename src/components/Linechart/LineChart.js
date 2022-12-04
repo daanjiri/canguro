@@ -53,7 +53,7 @@ const LineChart = ({ data }) => {
   };
 
   return (
-    <div style={{ width: '40vw', paddingTop: 12 }}>
+    <div style={{ paddingTop: 12 }}>
       <Box sx={{ width: '40%' }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">variable</InputLabel>

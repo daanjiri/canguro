@@ -1,101 +1,88 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Line } from 'react-chartjs-2';
+import { Scatter } from 'react-chartjs-2';
 import 'chart.js/auto';
 import 'chartjs-plugin-zoom';
-import Box from '@mui/material/Box';
+import { Box, Grid } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-const LineChart = ({ data }) => {
+const ScatterPlot = ({ data }) => {
   const ref = useRef();
-  const [variable, setVariable] = React.useState('peso');
+  const [x, setX] = React.useState('CP_edadmaterna');
+  const [y, setY] = React.useState('CSP_EmbarazoDeseado');
+  const [mappedData, setMappedData] = useState(data);
 
-  const pesoDataset = data.map((d, idx) => {
-    const nacimiento =
-      d['ERN_Peso'] === '#NULL!' ? 0 : parseInt(d['ERN_Peso'], 10);
-    const hospNeonatal =
-      d['HD_PesoSalida'] === '#NULL!' ? 0 : parseInt(d['HD_PesoSalida'], 10);
-    const entrada = d['V196A'] === '#NULL!' ? 0 : parseInt(d['V196A'], 10);
-    const sem40 = d['V218'] === '#NULL!' ? 0 : parseInt(d['V218'], 10);
-    const mes3 = d['V261'] === '#NULL!' ? 0 : parseInt(d['V261'], 10);
-    const mes6 = d['V304'] === '#NULL!' ? 0 : parseInt(d['V304'], 10);
-    const mes9 = d['V347'] === '#NULL!' ? 0 : parseInt(d['V347'], 10);
-    const mes12 = d['V389'] === '#NULL!' ? 0 : parseInt(d['V389'], 10);
+  useEffect(() => {
+    const newMappedData = data.map((d) => {
+      return {
+        x: parseInt(d[x], 10),
+        y: parseInt(d[y], 10),
+      };
+    });
+    setMappedData(newMappedData);
+  }, [x, y, data]);
 
-    return {
-      id: d['@_id'],
-      label: `paciente:${d['@_id']} `,
-      data: [nacimiento, hospNeonatal, entrada, sem40, mes3, mes6, mes9, mes12],
-    };
-  });
-
-  const tallaDataset = data.map((d, idx) => {
-    const nacimiento =
-      d['ERN_Talla'] === '#NULL!' ? 0 : parseInt(d['ERN_Talla'], 10);
-    const entrada = d['V196B'] === '#NULL!' ? 0 : parseInt(d['V196B'], 10);
-    const sem40 = d['V219'] === '#NULL!' ? 0 : parseInt(d['V219'], 10);
-    const mes3 = d['V262'] === '#NULL!' ? 0 : parseInt(d['V262'], 10);
-    const mes6 = d['V305'] === '#NULL!' ? 0 : parseInt(d['V305'], 10);
-    const mes9 = d['V348'] === '#NULL!' ? 0 : parseInt(d['V348'], 10);
-    const mes12 = d['V390'] === '#NULL!' ? 0 : parseInt(d['V390'], 10);
-
-    return {
-      id: d['@_id'],
-      label: `paciente:${d['@_id']} `,
-      data: [nacimiento, entrada, sem40, mes3, mes6, mes9, mes12],
-    };
-  });
-
-  const handleChange = (event) => {
-    setVariable(event.target.value);
+  const handleChangeX = (event) => {
+    setX(event.target.value);
+  };
+  const handleChangeY = (event) => {
+    setY(event.target.value);
   };
 
   return (
-    <div style={{ width: '40vw', paddingTop: 12 }}>
-      <Box sx={{ width: '40%' }}>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">variable</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={variable}
-            label="Variable"
-            onChange={handleChange}
-          >
-            <MenuItem value={'peso'}>peso</MenuItem>
-            <MenuItem value={'talla'}>talla</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
-      <Line
+    <div style={{ paddingTop: 12 }}>
+      <Grid container display="flex" spacing={1}>
+        <Grid item xs={6}>
+          <FormControl fullWidth>
+            <InputLabel id="varx">var y</InputLabel>
+            <Select
+              labelId="varx"
+              id="demo-simple-select"
+              value={x}
+              label="Var x"
+              onChange={handleChangeX}
+            >
+              <MenuItem value={'CP_edadmaterna'}>CP_edadmaterna</MenuItem>
+              <MenuItem value={'CSP_EmbarazoDeseado'}>
+                CSP_EmbarazoDeseado
+              </MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+
+        <Grid item xs={6}>
+          <FormControl fullWidth>
+            <InputLabel id="vary">var y</InputLabel>
+            <Select
+              labelId="vary"
+              id="demo-simple-select"
+              value={y}
+              label="Var y"
+              onChange={handleChangeY}
+            >
+              <MenuItem value={'CP_edadmaterna'}>CP_edadmaterna</MenuItem>
+              <MenuItem value={'CSP_EmbarazoDeseado'}>
+                CSP_EmbarazoDeseado
+              </MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+      </Grid>
+      <Scatter
         ref={ref}
         datasetIdKey="id"
         data={{
-          labels:
-            variable === 'peso'
-              ? [
-                  'nacimiento',
-                  'hospNeonatal',
-                  'entrada',
-                  'sem40',
-                  'mes3',
-                  'mes6',
-                  'mes9',
-                  'mes12',
-                ]
-              : [
-                  'nacimiento',
-                  'entrada',
-                  'sem40',
-                  'mes3',
-                  'mes6',
-                  'mes9',
-                  'mes12',
-                ],
-          datasets: variable === 'peso' ? pesoDataset : tallaDataset,
+          datasets: [
+            {
+              label: `${x} vs ${y}`,
+              data: mappedData,
+              backgroundColor: 'rgba(255, 99, 132, 1)',
+            },
+          ],
         }}
+        // backgroundColor="rgba(255, 99, 132, 1)"
         options={{
           legend: {
             display: false,
@@ -108,4 +95,4 @@ const LineChart = ({ data }) => {
   );
 };
 
-export default LineChart;
+export default ScatterPlot;
