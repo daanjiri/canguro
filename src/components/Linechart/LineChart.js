@@ -96,8 +96,17 @@ const LineChart = ({ data }) => {
 
       <Plot
         data={variable === 'peso' ? pesoDataset : tallaDataset}
-        // layout={{ title: 'A Fancy Plot' }}
         style={{ width: '100%' }}
+        layout={{
+          title: false,
+          margin: {
+            l: 24,
+            r: 24,
+            b: 24,
+            t: 24,
+            pad: 4,
+          },
+        }}
       />
     </div>
   );

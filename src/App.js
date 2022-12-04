@@ -3,8 +3,6 @@ import * as d3 from 'd3';
 import dataCSV from './data_short.csv';
 import LineChart from './components/Linechart/LineChart';
 import ScatterPlot from './components/ScatterPlot/ScatterPlot';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { Box, Grid } from '@mui/material';
 import BoxPlot from './components/boxPlot/BoxPlot';
@@ -77,7 +75,14 @@ const App = () => {
 
   return (
     <div>
-      <Box display="flex">
+      <Box
+        style={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'flex-end',
+        }}
+      >
         <div>
           {' '}
           <Checkbox

@@ -76,7 +76,16 @@ const ScatterPlot = ({ data }) => {
       </Grid>
       <Plot
         data={mappedData}
-        // layout={{ title: 'A Fancy Plot' }}
+        layout={{
+          title: false,
+          margin: {
+            l: 24,
+            r: 24,
+            b: 24,
+            t: 24,
+            pad: 4,
+          },
+        }}
         style={{ width: '100%' }}
       />
     </div>
