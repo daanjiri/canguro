@@ -6,6 +6,7 @@ import ScatterPlot from './components/ScatterPlot/ScatterPlot';
 import Checkbox from '@mui/material/Checkbox';
 import { Box, Grid } from '@mui/material';
 import BoxPlot from './components/boxPlot/BoxPlot';
+import RadarPlot from './components/RadarPlot/RadarPlot';
 
 const SEXO_1 = 'sexo1';
 const SEXO_2 = 'sexo2';
@@ -74,7 +75,12 @@ const App = () => {
   }, [sexo.SEXO_1, sexo.SEXO_2, sexo.SEXO_3, data, sexo]);
 
   return (
-    <div>
+    <div
+      style={{
+        naxHeight: '100wh',
+        padding: '0px 24px',
+      }}
+    >
       <Box
         style={{
           width: '100%',
@@ -112,7 +118,7 @@ const App = () => {
         </div>
       </Box>
 
-      <Grid container spacing={2}>
+      <Grid container spacing={0}>
         <Grid item xs={6}>
           <ScatterPlot data={filteredData} />
         </Grid>
@@ -120,11 +126,12 @@ const App = () => {
           <LineChart data={filteredData} />
         </Grid>
         <Grid item xs={6}>
+          <RadarPlot data={filteredData} />
+        </Grid>
+        <Grid item xs={6}>
           <BoxPlot data={filteredData} />
         </Grid>
       </Grid>
-
-      {/* {data.map((d)=><div>{d['@_id']}</div>)} */}
     </div>
   );
 };

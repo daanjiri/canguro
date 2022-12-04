@@ -6,7 +6,46 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-const BoxPlot = ({ data }) => {
+const normalizeData = (data, selectedVariables) => {
+  let normalizeData = [];
+  const filteredData = data.map((d) => {
+    const obj = {};
+    selectedVariables.forEach((variable) => {
+      obj[variable] = parseInt(d[variable], 10);
+    });
+    return obj;
+  });
+  console.log('filteredData', filteredData);
+
+  if (filteredData.length > 0) {
+    const minMaxsObj = {};
+    selectedVariables.forEach((variable) => {
+      const max = Math.max(
+        ...filteredData.map((d) => parseInt(d[variable], 10))
+      );
+      const min = Math.min(
+        ...filteredData.map((d) => parseInt(d[variable], 10))
+      );
+      minMaxsObj[variable] = {
+        max,
+        min,
+      };
+    });
+    console.log('minMaxsObj', minMaxsObj);
+
+    normalizeData = filteredData.map((d) => {
+      const normObj = {};
+      Object.keys(d).forEach((key) => {
+        normObj[key] = (d[key] * 100) / minMaxsObj[key].max;
+      });
+      return normObj;
+    });
+  }
+
+  return normalizeData;
+};
+
+const RadarPlot = ({ data }) => {
   const [mappedData, setMappedData] = useState(data);
   const variables = ['CP_edadmaterna', 'CSP_EmbarazoDeseado', 'ERN_Peso'];
   const [selected, setSelected] = useState(variables);
@@ -19,13 +58,19 @@ const BoxPlot = ({ data }) => {
   };
 
   useEffect(() => {
-    const newMappedData = selected.map((variable) => {
-      const newBoxData = data.map((d) => parseInt(d[variable], 10));
+    const nomData = normalizeData(data, selected);
+
+    const newMappedData = nomData.map((d) => {
+      const radarArray = selected.map((variable) => parseInt(d[variable], 10));
+      console.log('radarArray', radarArray);
       return {
-        y: newBoxData,
-        type: 'box',
+        type: 'scatterpolar',
+        r: radarArray,
+        theta: selected,
+        fill: 'toself',
       };
     });
+
     setMappedData(newMappedData);
   }, [selected, data]);
 
@@ -68,4 +113,4 @@ const BoxPlot = ({ data }) => {
   );
 };
 
-export default BoxPlot;
+export default RadarPlot;
