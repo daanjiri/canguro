@@ -7,6 +7,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { Box, Grid } from '@mui/material';
+import BoxPlot from './components/boxPlot/BoxPlot';
 
 const SEXO_1 = 'sexo1';
 const SEXO_2 = 'sexo2';
@@ -112,6 +113,9 @@ const App = () => {
         </Grid>
         <Grid item xs={6}>
           <LineChart data={filteredData} />
+        </Grid>
+        <Grid item xs={6}>
+          <BoxPlot data={filteredData} />
         </Grid>
       </Grid>
 

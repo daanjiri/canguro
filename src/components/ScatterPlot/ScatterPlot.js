@@ -6,21 +6,25 @@ import { Box, Grid } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
+import Plot from 'react-plotly.js';
 
 const ScatterPlot = ({ data }) => {
-  const ref = useRef();
   const [x, setX] = React.useState('CP_edadmaterna');
   const [y, setY] = React.useState('CSP_EmbarazoDeseado');
   const [mappedData, setMappedData] = useState(data);
 
   useEffect(() => {
-    const newMappedData = data.map((d) => {
-      return {
-        x: parseInt(d[x], 10),
-        y: parseInt(d[y], 10),
-      };
-    });
+    const arrayX = data.map((d) => parseInt(d[x], 10));
+    const arrayY = data.map((d) => parseInt(d[y], 10));
+    const newMappedData = [
+      {
+        x: arrayX,
+        y: arrayY,
+        mode: 'markers',
+        type: 'scatter',
+      },
+    ];
     setMappedData(newMappedData);
   }, [x, y, data]);
 
@@ -70,26 +74,10 @@ const ScatterPlot = ({ data }) => {
           </FormControl>
         </Grid>
       </Grid>
-      <Scatter
-        ref={ref}
-        datasetIdKey="id"
-        data={{
-          datasets: [
-            {
-              label: `${x} vs ${y}`,
-              data: mappedData,
-              backgroundColor: 'rgba(255, 99, 132, 1)',
-            },
-          ],
-        }}
-        // backgroundColor="rgba(255, 99, 132, 1)"
-        options={{
-          legend: {
-            display: false,
-          },
-          // title: { display: true, text: 'My Chart' },
-          responsive: true,
-        }}
+      <Plot
+        data={mappedData}
+        // layout={{ title: 'A Fancy Plot' }}
+        style={{ width: '100%' }}
       />
     </div>
   );

@@ -1,15 +1,14 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Line } from 'react-chartjs-2';
+import React from 'react';
+import Plot from 'react-plotly.js';
 import 'chart.js/auto';
 import 'chartjs-plugin-zoom';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 
 const LineChart = ({ data }) => {
-  const ref = useRef();
   const [variable, setVariable] = React.useState('peso');
 
   const pesoDataset = data.map((d, idx) => {
@@ -25,9 +24,20 @@ const LineChart = ({ data }) => {
     const mes12 = d['V389'] === '#NULL!' ? 0 : parseInt(d['V389'], 10);
 
     return {
-      id: d['@_id'],
-      label: `paciente:${d['@_id']} `,
-      data: [nacimiento, hospNeonatal, entrada, sem40, mes3, mes6, mes9, mes12],
+      x: [
+        'nacimiento',
+        'hospNeonatal',
+        'entrada',
+        'sem40',
+        'mes3',
+        'mes6',
+        'mes9',
+        'mes12',
+      ],
+      y: [nacimiento, hospNeonatal, entrada, sem40, mes3, mes6, mes9, mes12],
+      type: 'scatter',
+      mode: 'lines+markers',
+      // marker: { color: 'red' },
     };
   });
 
@@ -42,9 +52,10 @@ const LineChart = ({ data }) => {
     const mes12 = d['V390'] === '#NULL!' ? 0 : parseInt(d['V390'], 10);
 
     return {
-      id: d['@_id'],
-      label: `paciente:${d['@_id']} `,
-      data: [nacimiento, entrada, sem40, mes3, mes6, mes9, mes12],
+      x: ['nacimiento', 'entrada', 'sem40', 'mes3', 'mes6', 'mes9', 'mes12'],
+      y: [nacimiento, entrada, sem40, mes3, mes6, mes9, mes12],
+      type: 'scatter',
+      mode: 'lines+markers',
     };
   });
 
@@ -54,55 +65,39 @@ const LineChart = ({ data }) => {
 
   return (
     <div style={{ paddingTop: 12 }}>
-      <Box sx={{ width: '40%' }}>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">variable</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={variable}
-            label="Variable"
-            onChange={handleChange}
-          >
-            <MenuItem value={'peso'}>peso</MenuItem>
-            <MenuItem value={'talla'}>talla</MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
-      <Line
-        ref={ref}
-        datasetIdKey="id"
-        data={{
-          labels:
-            variable === 'peso'
-              ? [
-                  'nacimiento',
-                  'hospNeonatal',
-                  'entrada',
-                  'sem40',
-                  'mes3',
-                  'mes6',
-                  'mes9',
-                  'mes12',
-                ]
-              : [
-                  'nacimiento',
-                  'entrada',
-                  'sem40',
-                  'mes3',
-                  'mes6',
-                  'mes9',
-                  'mes12',
-                ],
-          datasets: variable === 'peso' ? pesoDataset : tallaDataset,
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'flex-end',
         }}
-        options={{
-          legend: {
-            display: false,
-          },
-          // title: { display: true, text: 'My Chart' },
-          responsive: true,
-        }}
+      >
+        <Box
+          sx={{
+            width: '40%',
+          }}
+        >
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">variable</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={variable}
+              label="Variable"
+              onChange={handleChange}
+            >
+              <MenuItem value={'peso'}>peso</MenuItem>
+              <MenuItem value={'talla'}>talla</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+      </div>
+
+      <Plot
+        data={variable === 'peso' ? pesoDataset : tallaDataset}
+        // layout={{ title: 'A Fancy Plot' }}
+        style={{ width: '100%' }}
       />
     </div>
   );
