@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/canguro/static/css/main.e6c13ad2.css",
+    "main.js": "/canguro/static/js/main.7cf663db.js",
+    "static/js/787.2dc4bfe2.chunk.js": "/canguro/static/js/787.2dc4bfe2.chunk.js",
+    "static/media/data_short.csv": "/canguro/static/media/data_short.a2f6d29d22efd03b7a9a.csv",
+    "index.html": "/canguro/index.html",
+    "main.e6c13ad2.css.map": "/canguro/static/css/main.e6c13ad2.css.map",
+    "main.7cf663db.js.map": "/canguro/static/js/main.7cf663db.js.map",
+    "787.2dc4bfe2.chunk.js.map": "/canguro/static/js/787.2dc4bfe2.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.7cf663db.js"
+  ]
+}
