@@ -15,8 +15,6 @@ const normalizeData = (data, selectedVariables) => {
     });
     return obj;
   });
-  console.log('filteredData', filteredData);
-
   if (filteredData.length > 0) {
     const minMaxsObj = {};
     selectedVariables.forEach((variable) => {
@@ -31,8 +29,6 @@ const normalizeData = (data, selectedVariables) => {
         min,
       };
     });
-    console.log('minMaxsObj', minMaxsObj);
-
     normalizeData = filteredData.map((d) => {
       const normObj = {};
       Object.keys(d).forEach((key) => {
@@ -47,7 +43,13 @@ const normalizeData = (data, selectedVariables) => {
 
 const RadarPlot = ({ data }) => {
   const [mappedData, setMappedData] = useState(data);
-  const variables = ['CP_edadmaterna', 'CSP_EmbarazoDeseado', 'ERN_Peso'];
+  const variables = [
+    'CP_edadmaterna',
+    'CSP_EmbarazoDeseado',
+    'ERN_Peso',
+    'edadmatcat',
+    'menosde31sem',
+  ];
   const [selected, setSelected] = useState(variables);
 
   const handleChange = (event) => {
@@ -62,7 +64,6 @@ const RadarPlot = ({ data }) => {
 
     const newMappedData = nomData.map((d) => {
       const radarArray = selected.map((variable) => parseInt(d[variable], 10));
-      console.log('radarArray', radarArray);
       return {
         type: 'scatterpolar',
         r: radarArray,

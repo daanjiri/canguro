@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useReducer } from 'react';
 import * as d3 from 'd3';
-import dataCSV from './data_short.csv';
+import dataCSV from './data_sample.csv';
+import clusterCSV from './data_short.csv';
 import LineChart from './components/Linechart/LineChart';
 import ScatterPlot from './components/ScatterPlot/ScatterPlot';
 import Checkbox from '@mui/material/Checkbox';
@@ -40,6 +41,7 @@ const reducer = (state, action) => {
 
 const App = () => {
   const [data, setData] = useState([]);
+  const [cluster, setCluster] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [sexo, dispatch] = useReducer(reducer, initialCheckBoxesStates);
 
@@ -57,6 +59,10 @@ const App = () => {
     d3.csv(dataCSV).then((d) => {
       setData(d);
       // console.log(d)
+    });
+    d3.csv(clusterCSV).then((d) => {
+      setCluster(d);
+      console.log(d);
     });
   }, []);
 
@@ -123,10 +129,10 @@ const App = () => {
           <ScatterPlot data={filteredData} />
         </Grid>
         <Grid item xs={6}>
-          <LineChart data={filteredData} />
+          <LineChart data={cluster} />
         </Grid>
         <Grid item xs={6}>
-          <RadarPlot data={filteredData} />
+          <RadarPlot data={cluster} />
         </Grid>
         <Grid item xs={6}>
           <BoxPlot data={filteredData} />

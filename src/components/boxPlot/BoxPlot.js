@@ -8,7 +8,13 @@ import Select from '@mui/material/Select';
 
 const BoxPlot = ({ data }) => {
   const [mappedData, setMappedData] = useState(data);
-  const variables = ['CP_edadmaterna', 'CSP_EmbarazoDeseado', 'ERN_Peso'];
+  const variables = [
+    'CP_edadmaterna',
+    'CSP_EmbarazoDeseado',
+    'ERN_Peso',
+    'edadmatcat',
+    'menosde31sem',
+  ];
   const [selected, setSelected] = useState(variables);
 
   const handleChange = (event) => {
