@@ -93,21 +93,24 @@ const LineChart = ({ data }) => {
           </FormControl>
         </Box>
       </div>
-
-      <Plot
-        data={variable === 'peso' ? pesoDataset : tallaDataset}
-        style={{ width: '100%' }}
-        layout={{
-          title: false,
-          margin: {
-            l: 24,
-            r: 24,
-            b: 24,
-            t: 24,
-            pad: 4,
-          },
-        }}
-      />
+      <div>
+        <Plot
+          data={variable === 'peso' ? pesoDataset : tallaDataset}
+          style={{ width: '100%' }}
+          layout={{
+            title: false,
+            margin: {
+              l: 24,
+              r: 24,
+              b: 24,
+              t: 24,
+              pad: 4,
+            },
+            // height: '300',
+            // width: '100%',
+          }}
+        />
+      </div>
     </div>
   );
 };

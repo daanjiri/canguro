@@ -57,20 +57,24 @@ const BoxPlot = ({ data }) => {
           </Select>
         </FormControl>
       </div>
-      <Plot
-        layout={{
-          title: false,
-          margin: {
-            l: 24,
-            r: 24,
-            b: 24,
-            t: 24,
-            pad: 4,
-          },
-        }}
-        data={mappedData}
-        style={{ heigh: '100%' }}
-      />
+      <div style={{}}>
+        <Plot
+          layout={{
+            title: false,
+            margin: {
+              l: 24,
+              r: 24,
+              b: 24,
+              t: 24,
+              pad: 4,
+            },
+            // height: '300',
+            // width: '100%',
+          }}
+          data={mappedData}
+          //   config={{ responsive: true }}
+        />
+      </div>
     </div>
   );
 };

@@ -74,20 +74,24 @@ const ScatterPlot = ({ data }) => {
           </FormControl>
         </Grid>
       </Grid>
-      <Plot
-        data={mappedData}
-        layout={{
-          title: false,
-          margin: {
-            l: 24,
-            r: 24,
-            b: 24,
-            t: 24,
-            pad: 4,
-          },
-        }}
-        style={{ width: '100%' }}
-      />
+      <div>
+        <Plot
+          data={mappedData}
+          layout={{
+            title: false,
+            margin: {
+              l: 24,
+              r: 24,
+              b: 24,
+              t: 24,
+              pad: 4,
+            },
+            //   height: '300',
+            //   width: '100%',
+          }}
+          // config={{ responsive: true }}
+        />
+      </div>
     </div>
   );
 };
